@@ -1,1 +1,1 @@
-# Video-RAG---Training-Free-Retrieval-for-Long-Video-LVLMs
+# Multimodal-Video-RAG-Hybrid
