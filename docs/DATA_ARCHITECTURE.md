@@ -10,7 +10,7 @@ Times are finite nonnegative seconds on the source timeline, with at most micros
 
 ### Important current limitations
 
-The P0/P1 record validates in-video references. The builder requires a known duration and makes one unit per observation; composite windows and any rewriting policy remain unevaluated. Global registry checks across video records, source digest verification against actual bytes, observation truthfulness, frame artifact existence, and extraction coverage require ingestion. Unknown duration remains allowed in the contract for unprobed assets but cannot be built/indexed. IDs are version 1; migration must explicitly rebuild indexes and record the old/new mapping.
+The P0/P1 record validates in-video references. P2-001 registration now derives digest and duration from local video bytes/`ffprobe`; the single-writer manifest records source verification, technical metadata and processing status. Replacing bytes at one path supersedes only that path's old source association, retaining the old identity for audit. This is registration-time verification, not a continuous guarantee that paths still exist or have the same bytes. The builder requires a known duration and makes one unit per observation; composite windows and any rewriting policy remain unevaluated. Cross-video reference resolution, observation truthfulness, frame artifact existence, extraction coverage, and revalidation immediately before processing are pending. Unknown duration remains allowed in the contract for unprobed assets but cannot be built/indexed. IDs are version 1; migration must explicitly rebuild indexes and record the old/new mapping.
 
 ## Neo4j projection (accepted persistent graph, implementation pending)
 

@@ -6,7 +6,7 @@ Answer questions about heterogeneous videos with auditable, source-linked eviden
 
 **Accepted V1 architecture:** canonical domain-neutral Pydantic records; independent offline extraction/indexing; online dense, BM25 and persistent Neo4j graph channels converging on retrieval-unit IDs; deduplication and RRF; evidence validation and explicit insufficient-evidence answers; FastAPI backend and initial Streamlit UI. Media and source records are the authority; every index is rebuildable.
 
-**Delivered foundation:** validated asset, temporal span, speech/OCR/frame observations, unit, evidence and candidate types; deterministic one-observation unit/evidence building; canonical JSON snapshots, explicit incomplete-evidence diagnostics and synthetic tests. This is deliberately smaller than the V1 product.
+**Delivered foundation:** validated asset, temporal span, speech/OCR/frame observations, unit, evidence and candidate types; deterministic one-observation unit/evidence building; canonical JSON snapshots; registration-time media hashing and probing with a source/status manifest; explicit incomplete-evidence diagnostics and synthetic tests. This is deliberately smaller than the V1 product.
 
 ## V1 user path and acceptance targets
 
