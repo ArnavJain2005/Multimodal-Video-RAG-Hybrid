@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "multimodal-video-rag"
+version = "0.1.0"
+description = "Canonical contracts for Multimodal Video RAG using Hybrid Vector and Knowledge Graph Retrieval"
+requires-python = ">=3.11"
+dependencies = ["pydantic>=2.10,<3"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
