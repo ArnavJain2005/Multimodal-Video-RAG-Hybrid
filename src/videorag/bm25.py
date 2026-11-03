@@ -104,7 +104,13 @@ class BM25Index:
             for term in terms:
                 tf = doc.frequencies.get(term, 0)
                 if tf:
-                    score += self._idf[term] * tf * (self.k1 + 1.0) / (tf + self.k1 * norm)
+                    # Divide by k1 first for large values: multiplying IDF by
+                    # k1 can overflow even though the final ratio is finite.
+                    if self.k1 >= 1.0:
+                        ratio = tf * (1.0 + 1.0 / self.k1) / (tf / self.k1 + norm)
+                    else:
+                        ratio = tf * (self.k1 + 1.0) / (tf + self.k1 * norm)
+                    score += self._idf[term] * ratio
             if score > 0.0:
                 scored.append((-score, doc.unit_id))
         scored.sort()

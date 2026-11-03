@@ -7,6 +7,8 @@ from .contracts import (CanonicalVideo, Evidence, EvidenceResolution, FrameDescr
 from .build import build_canonical_video
 from .persistence import (EvidenceGap, IncompleteEvidenceError, evidence_gaps,
                           load_canonical_video, save_canonical_video)
+from .frames import (FrameArtifact, FrameExtractionError, FrameExtractionResult,
+                     FrameManifest, sample_frames)
 from .ingestion import (MediaManifest, MediaRecord, MediaSource, MediaValidationError,
                         RegistrationResult, load_media_manifest, register_video,
                         set_processing_status)
@@ -17,6 +19,8 @@ __all__ = ["CanonicalVideo", "Evidence", "EvidenceResolution", "FrameDescription
            "make_observation"]
 __all__ += ["build_canonical_video", "EvidenceGap", "IncompleteEvidenceError",
             "evidence_gaps", "load_canonical_video", "save_canonical_video"]
+__all__ += ["FrameArtifact", "FrameExtractionError", "FrameExtractionResult",
+            "FrameManifest", "sample_frames"]
 __all__ += ["MediaManifest", "MediaRecord", "MediaSource", "MediaValidationError",
             "RegistrationResult", "load_media_manifest", "register_video",
             "set_processing_status"]

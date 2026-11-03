@@ -6,7 +6,7 @@ Answer questions about heterogeneous videos with auditable, source-linked eviden
 
 **Accepted V1 architecture:** canonical domain-neutral Pydantic records; independent offline extraction/indexing; online dense, BM25 and persistent Neo4j graph channels converging on retrieval-unit IDs; deduplication and RRF; evidence validation and explicit insufficient-evidence answers; FastAPI backend and initial Streamlit UI. Media and source records are the authority; every index is rebuildable.
 
-**Delivered foundation:** validated asset, temporal span, speech/OCR/frame observations, unit, evidence and candidate types; deterministic one-observation unit/evidence building; canonical JSON snapshots; registration-time media hashing and probing with a source/status manifest; explicit incomplete-evidence diagnostics and synthetic tests. This is deliberately smaller than the V1 product.
+**Delivered foundation:** validated asset, temporal span, speech/OCR/frame observation contracts, unit, evidence and candidate types; deterministic one-observation unit/evidence building; canonical JSON snapshots; verified media registration; offline sampled PNG frames with actual decoded timestamps and artifact hashes; explicit incomplete-evidence diagnostics and generated-clip tests. This is deliberately smaller than the V1 product.
 
 ## V1 user path and acceptance targets
 
@@ -22,6 +22,6 @@ Acceptance for the later end-to-end pilot: two **authorized real videos** proces
 
 Plan approximately 24 authorized English videos across six categories, about four per category and 3–15 minutes each, after a two-video pilot. Curate independently checked questions and evidence annotations before claiming performance. Compare dense, BM25, graph, pairwise and three-channel retrieval with fixed data, queries and metrics (Recall@k, MRR/nDCG, citation correctness, abstention and latency/cost). Report uncertainty and failed channel rates.
 
-**Provisional choices:** Sentence Transformers + FAISS, BM25 implementation, model family, text unit granularity, RRF parameter, and sampled frame cadence. Freeze runtime ASR/vision/embedding models only after recording exact versions, licenses, hardware, cost and pilot measurements. ChatGPT reasoning settings are unrelated to these runtime choices.
+**Provisional choices:** Sentence Transformers + FAISS, BM25 implementation, model family, text unit granularity, RRF parameter, and the initial four-second minimum gap between native sampled frames. Freeze runtime ASR/vision/embedding models only after recording exact versions, licenses, hardware, cost and pilot measurements. ChatGPT reasoning settings are unrelated to these runtime choices.
 
 **Open questions:** media authorization and licenses; final transcript segmentation; initial entity/event ontology; pilot hardware and deployment budget; answer-generation provider and acceptable latency. No open question blocks the current contracts.

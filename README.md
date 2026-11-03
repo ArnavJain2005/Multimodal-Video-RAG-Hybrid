@@ -1,6 +1,6 @@
 # Multimodal Video RAG using Hybrid Vector and Knowledge Graph Retrieval
 
-An independent, domain-agnostic foundation for video evidence retrieval. **Current status:** typed canonical records, deterministic one-observation retrieval units, validated JSON snapshots, local video registration with probed duration and streamed SHA-256, a media manifest, explicit evidence-gap reporting, and tests using generated clips. A standalone in-memory BM25 channel exists (unevaluated). No ASR/vision extraction, dense/graph retriever, live database, API, UI, inference, or evaluated quality is implemented yet.
+An independent, domain-agnostic foundation for video evidence retrieval. **Current status:** typed canonical records, deterministic one-observation retrieval units, validated JSON snapshots, verified local media registration, deterministic offline frame artifacts with actual decoded timestamps, and a standalone in-memory BM25 channel (unevaluated). No ASR, OCR, visual descriptions, dense/graph retriever, live database, API, UI, inference, or evaluated quality is implemented yet.
 
 ## Run the milestone
 
@@ -26,6 +26,18 @@ print(load_media_manifest("data/media_manifest.json").records)
 
 Registration verifies a real video stream and duration with `ffprobe`, streams the file's SHA-256, and atomically records the asset, source URIs, technical metadata and `registered` processing status. The same bytes retain one video ID across file paths. When bytes change at a previously registered path, that path is marked `superseded` on the old identity and `verified` on the new one. `set_processing_status` records subsequent processing/failure states. This is a single-writer local manifest; sources are checked at registration time and must be revalidated before later processing if files may have moved or changed. Media and manifest files are ignored by git.
 
+## Sample verified frames offline
+
+```python
+from videorag import sample_frames
+
+result = sample_frames("data/media_manifest.json", video_id, "data/frames", gap_s=4.0)
+for frame in result.manifest.frames:
+    print(frame.frame_id, frame.timestamp_s, result.directory / frame.relative_path)
+```
+
+The versioned policy selects actual decoded frames at least four seconds apart by default. It records both raw source PTS and seconds relative to the stream start (the canonical video timeline), plus artifact hash, source identity, settings, and FFmpeg version. The selected source is rehashed before and after extraction; a repeat run verifies existing artifacts before reuse. The gap is provisional and must be measured on the pilot. A frame artifact contains no caption, OCR text, or retrieval unit; future extractors must cite an actual `frame_id` when producing observations. Frame sampling does not set the overall media processing status to `processed`.
+
 ## Canonical snapshot example
 
 ```python
@@ -43,8 +55,9 @@ The builder makes one unit and evidence link per observation, sorted by time and
 
 - `src/videorag/contracts.py`: Pydantic video, observations, retrieval units, evidence and candidate contract.
 - `src/videorag/build.py`, `persistence.py`: deterministic projection and atomic, validated JSON snapshots.
-- `src/videorag/bm25.py`: standalone in-memory BM25 channel ([design note](docs/BM25_RETRIEVAL.md)).
 - `src/videorag/ingestion.py`: local video verification, identity registration and status manifest.
+- `src/videorag/frames.py`: source revalidation, single-pass native frame sampling and frame artifact manifest.
+- `src/videorag/bm25.py`: standalone in-memory BM25 channel ([design note](docs/BM25_RETRIEVAL.md)).
 - `tests/`: synthetic two-video examples and validation checks.
 - `docs/PRD.md`: scope and acceptance boundaries.
 - `docs/SYSTEM_ARCHITECTURE.md`: offline and online responsibilities.

@@ -1,8 +1,11 @@
 import itertools
+import hashlib
+import math
 import unittest
 
 from fixtures import synthetic_videos
-from videorag import CanonicalVideo, IncompleteEvidenceError, TemporalSpan
+from videorag import (CanonicalVideo, IncompleteEvidenceError, Provenance, TemporalSpan,
+                      TranscriptSpan, VideoAsset, build_canonical_video, make_observation)
 from videorag.bm25 import BM25Index, DuplicateUnitError, tokenize
 
 
@@ -122,6 +125,23 @@ class BM25Tests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 BM25Index([], k1=k1, b=b)
         self.assertEqual(3, len(BM25Index(self.v1)))  # a single record is accepted
+
+    def test_large_finite_k1_keeps_rare_term_score_finite(self):
+        records = []
+        for n in range(24):
+            asset = VideoAsset.build(hashlib.sha256(f"rare-{n}".encode()).hexdigest(),
+                                     f"synthetic://rare-{n}", 2.0)
+            observation = make_observation(
+                TranscriptSpan, video_id=asset.video_id,
+                span=TemporalSpan(start_s=0, end_s=1),
+                text="unique_target" if n == 0 else f"other_{n}",
+                provenance=Provenance(method="synthetic", version="1",
+                                      source_locator="audio"), language="en")
+            records.append(build_canonical_video(asset, (observation,)))
+        hits = BM25Index(records, k1=1e308).search("unique target")
+        self.assertEqual(len(hits), 1)
+        self.assertTrue(math.isfinite(hits[0].score))
+        self.assertGreater(hits[0].score, 0)
 
 
 if __name__ == "__main__":

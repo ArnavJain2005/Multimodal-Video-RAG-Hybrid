@@ -23,6 +23,8 @@ for c in index.search("blue robot", top_k=5):
 - **Score**: for each distinct query term `t` present in the corpus,
   `idf(t) * tf * (k1 + 1) / (tf + k1 * (1 - b + b * dl / avgdl))`, with
   `idf = ln(1 + (N - df + 0.5) / (df + 0.5))` (always positive). Defaults `k1 = 1.2`, `b = 0.75`.
+  The equivalent ratio divided through by `k1` is used when `k1 >= 1` to prevent
+  intermediate overflow for large finite parameters.
 - **Ranking**: score descending, ties by `unit_id` ascending; ranks are contiguous from 1. Internal
   iteration is in sorted order, so results do not depend on input record order or rebuilds.
   Scores are diagnostic and comparable only within this channel.
