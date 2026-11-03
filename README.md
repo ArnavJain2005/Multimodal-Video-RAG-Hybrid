@@ -1,6 +1,6 @@
 # Multimodal Video RAG using Hybrid Vector and Knowledge Graph Retrieval
 
-An independent, domain-agnostic foundation for video evidence retrieval. **Current status:** typed canonical records, deterministic one-observation retrieval units, validated JSON snapshots, local video registration with probed duration and streamed SHA-256, a media manifest, explicit evidence-gap reporting, and tests using generated clips. A standalone in-memory BM25 channel exists (unevaluated). No ASR/vision extraction, dense/graph retriever, live database, API, UI, inference, or evaluated quality is implemented yet.
+An independent, domain-agnostic foundation for video evidence retrieval. **Current status:** typed canonical records, deterministic one-observation retrieval units, validated JSON snapshots, local video registration with probed duration and streamed SHA-256, a media manifest, explicit evidence-gap reporting, sampled frame artifacts, and tests using generated clips. A standalone in-memory BM25 channel exists (unevaluated). No ASR/OCR/frame description extraction, dense/graph retriever, live database, API, UI, inference, or evaluated quality is implemented yet.
 
 ## Run the milestone
 
@@ -45,6 +45,7 @@ The builder makes one unit and evidence link per observation, sorted by time and
 - `src/videorag/build.py`, `persistence.py`: deterministic projection and atomic, validated JSON snapshots.
 - `src/videorag/bm25.py`: standalone in-memory BM25 channel ([design note](docs/BM25_RETRIEVAL.md)).
 - `src/videorag/ingestion.py`: local video verification, identity registration and status manifest.
+- `src/videorag/frames.py`: verified, reproducible PNG frame samples and artifact manifest ([usage](docs/FRAME_SAMPLING.md)).
 - `tests/`: synthetic two-video examples and validation checks.
 - `docs/PRD.md`: scope and acceptance boundaries.
 - `docs/SYSTEM_ARCHITECTURE.md`: offline and online responsibilities.

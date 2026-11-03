@@ -10,7 +10,7 @@ authorized media + manifest
   → independent dense / BM25 / Neo4j index builders
 ```
 
-The implemented builder sorts observations by start, end and ID, then derives one unit and evidence link per observation. It requires a known duration. `save_canonical_video` validates the complete record, rejects gaps by default, and writes an atomic JSON snapshot at `<video_id>.json`; changed snapshots require explicit replacement. Extraction itself is pending. A frame sample is a point observation; it must not be widened to assert a continuous action. Index builders must be idempotent and recoverable from canonical snapshots, with configuration/model versions recorded in manifests. Canonical types import no index, web or UI packages.
+The implemented builder sorts observations by start, end and ID, then derives one unit and evidence link per observation. It requires a known duration. `save_canonical_video` validates the complete record, rejects gaps by default, and writes an atomic JSON snapshot at `<video_id>.json`; changed snapshots require explicit replacement. Frame sampling now saves verified point-in-time PNG artifacts and a manifest; ASR, OCR and frame descriptions remain pending. A frame sample is a point observation; it must not be widened to assert a continuous action. Index builders must be idempotent and recoverable from canonical snapshots, with configuration/model versions recorded in manifests. Canonical types import no index, web or UI packages.
 
 ## Online path (accepted boundaries; implementation pending)
 
