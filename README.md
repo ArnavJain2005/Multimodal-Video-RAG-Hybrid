@@ -1,6 +1,6 @@
 # Multimodal Video RAG using Hybrid Vector and Knowledge Graph Retrieval
 
-An independent, domain-agnostic foundation for video evidence retrieval. **Current status:** typed canonical records, deterministic one-observation retrieval units, validated JSON snapshots, verified local media registration, and deterministic offline frame artifacts with actual decoded timestamps. No ASR, OCR, visual descriptions, retriever, live database, API, UI, inference, or evaluated quality is implemented yet.
+An independent, domain-agnostic foundation for video evidence retrieval. **Current status:** typed canonical records, deterministic one-observation retrieval units, validated JSON snapshots, verified local media registration, deterministic offline frame artifacts with actual decoded timestamps, and a standalone in-memory BM25 channel (unevaluated). No ASR, OCR, visual descriptions, dense/graph retriever, live database, API, UI, inference, or evaluated quality is implemented yet.
 
 ## Run the milestone
 
@@ -57,6 +57,7 @@ The builder makes one unit and evidence link per observation, sorted by time and
 - `src/videorag/build.py`, `persistence.py`: deterministic projection and atomic, validated JSON snapshots.
 - `src/videorag/ingestion.py`: local video verification, identity registration and status manifest.
 - `src/videorag/frames.py`: source revalidation, single-pass native frame sampling and frame artifact manifest.
+- `src/videorag/bm25.py`: standalone in-memory BM25 channel ([design note](docs/BM25_RETRIEVAL.md)).
 - `tests/`: synthetic two-video examples and validation checks.
 - `docs/PRD.md`: scope and acceptance boundaries.
 - `docs/SYSTEM_ARCHITECTURE.md`: offline and online responsibilities.
